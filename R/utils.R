@@ -30,7 +30,7 @@ ConvertPercentile <- function(stringInput)
 
 CheckSanityim <- function(im)
 {
-    if (!any(class(im) == "cimg")) 
+    if (!is.cimg(im)) 
 	{
 	    warning("im must be a image of class cimg.", call. = FALSE)
 		return(FALSE)
@@ -53,6 +53,36 @@ CheckSanityim <- function(im)
 	if (!is.numeric(im))
 	{
 	    warning("im must be numeric.", call. = FALSE)
+	    return(FALSE)
+	}
+	return(TRUE)
+}
+
+CheckSanityimcol <- function(imcol)
+{
+    if (!any(class(imcol) == "cimg")) 
+	{
+	    warning("imcol must be a image of class cimg.", call. = FALSE)
+		return(FALSE)
+	}
+	if (depth(imcol) != 1) 
+	{
+	    warning("the depth of imcol must be 1.", call. = FALSE)
+		return(FALSE)
+	}
+	if (imager::spectrum(imcol) != 3) 
+	{
+	    warning("imcol must be a color image.", call. = FALSE)
+		return(FALSE)
+	}
+	if (any(is.na(imcol))) 
+	{
+	    warning("imcol has NA. NA is unacceptable.", call. = FALSE)
+		return(FALSE)
+	}
+	if (!is.numeric(imcol))
+	{
+	    warning("imcol must be numeric.", call. = FALSE)
 	    return(FALSE)
 	}
 	return(TRUE)
@@ -87,4 +117,49 @@ CheckSanityrange <- function(range)
 		assign("range", range_ordered, pos = parent.frame())
 	}
 	return(TRUE)
+}
+
+CheckSanitypositivenumeric <- function(mynumeric, varname = "numericvar")
+{
+	if (length(mynumeric) != 1)
+	{
+	    warning(sprintf("The length of %s must be 1.", varname), call. = FALSE)
+		return(FALSE)
+	}
+	if (is.na(mynumeric))
+	{
+	    warning(sprintf("%s has NA. NA is unacceptable.", varname), call. = FALSE)
+		return(FALSE)
+	}
+	if (!is.numeric(mynumeric))
+	{
+	    warning(sprintf("%s must be numeric.", varname), call. = FALSE)
+		return(FALSE)
+	}
+	if (mynumeric <= 0)
+	{
+	    warning(sprintf("%s must be greater than 0.", varname), call. = FALSE)
+		return(FALSE)
+	}
+	return(TRUE)  
+}
+
+CheckSanitylogical <- function(mylogical, varname = "logicalcvar")
+{
+	if (length(mylogical) != 1)
+	{
+	    warning(sprintf("The length of %s must be 1.", varname), call. = FALSE)
+		return(FALSE)
+	}
+	if (is.na(mylogical))
+	{
+	    warning(sprintf("%s has NA. NA is unacceptable.", varname), call. = FALSE)
+		return(FALSE)
+	}
+	if (!is.logical(mylogical))
+	{
+	    warning(sprintf("%s must be logical.", varname), call. = FALSE)
+		return(FALSE)
+	}
+	return(TRUE)  
 }

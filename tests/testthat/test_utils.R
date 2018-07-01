@@ -32,6 +32,18 @@ test_that("utils",
 	expect_warning(CheckSanityim(im_char))
 	expect_equal(CheckSanityim(gim), TRUE)
 	
+	expect_equal(CheckSanityimcol(notim), FALSE)
+	expect_warning(CheckSanityimcol(notim))
+	expect_equal(CheckSanityimcol(gim2), FALSE)
+	expect_warning(CheckSanityimcol(gim2))
+    expect_equal(CheckSanityimcol(gim), FALSE)
+	expect_warning(CheckSanityimcol(gim))
+	expect_equal(CheckSanityimcol(im_NA), FALSE)
+	expect_warning(CheckSanityimcol(im_NA))
+	expect_equal(CheckSanityimcol(im_char), FALSE)
+	expect_warning(CheckSanityimcol(im_char))
+	expect_equal(CheckSanityimcol(im), TRUE)
+	
 	range_bad1 <- c(1,1,1)
 	range_bad2 <- c(-1,1)
 	range_bad3 <- c(0, NA)
@@ -49,4 +61,34 @@ test_that("utils",
 	expect_equal(CheckSanityrange(range_badorder), TRUE)
     expect_warning(CheckSanityrange(range_badorder))
 	expect_equal(CheckSanityrange(range_good), TRUE)
+	
+	numeric_bad1 <- c(1,2)
+	numeric_bad2 <- NA
+	numeric_bad3 <- NaN
+	numeric_bad4 <- "A"
+	numeric_bad5 <- -1
+	numeric_good <- 1
+	expect_equal(CheckSanitypositivenumeric(numeric_bad1), FALSE)
+	expect_warning(CheckSanitypositivenumeric(numeric_bad1))
+	expect_equal(CheckSanitypositivenumeric(numeric_bad2), FALSE)
+	expect_warning(CheckSanitypositivenumeric(numeric_bad2))	
+	expect_equal(CheckSanitypositivenumeric(numeric_bad3), FALSE)
+	expect_warning(CheckSanitypositivenumeric(numeric_bad3))
+	expect_equal(CheckSanitypositivenumeric(numeric_bad4), FALSE)
+	expect_warning(CheckSanitypositivenumeric(numeric_bad4))
+	expect_equal(CheckSanitypositivenumeric(numeric_bad5), FALSE)
+	expect_warning(CheckSanitypositivenumeric(numeric_bad5))
+	expect_equal(CheckSanitypositivenumeric(numeric_good), TRUE)		
+	
+	logical_bad1 <- c(TRUE, FALSE)
+	logical_bad2 <- NA
+	logical_bad3 <- 1
+	logical_good <- TRUE
+	expect_equal(CheckSanitylogical(logical_bad1), FALSE)
+	expect_warning(CheckSanitylogical(logical_bad1))
+	expect_equal(CheckSanitylogical(logical_bad2), FALSE)
+	expect_warning(CheckSanitylogical(logical_bad2))
+	expect_equal(CheckSanitylogical(logical_bad3), FALSE)
+	expect_warning(CheckSanitylogical(logical_bad3))
+	expect_equal(CheckSanitylogical(logical_good), TRUE)
 })
