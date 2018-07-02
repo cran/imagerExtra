@@ -46,6 +46,17 @@ double calc_ICV_ostu(double omegak, double myuk, double myut)
 double get_th_otsu(Rcpp::NumericVector prob_otsu, Rcpp::NumericVector bins)
 {
   int n = prob_otsu.size();
+  int m = bins.size();
+  if (n < 2)
+  {
+    Rcpp::Rcout << "lengths of prob_otsu must be greater than 1." << std::endl;
+    return 0;
+  }
+  if (n != m)
+  {
+    Rcpp::Rcout << "lengths of prob_otsu and bins are not same." << std::endl;
+    return 0;
+  }
     
   double myut = 0.0;
   for (int i = 0; i < n; ++i) 
@@ -66,7 +77,7 @@ double get_th_otsu(Rcpp::NumericVector prob_otsu, Rcpp::NumericVector bins)
     if (ICV > maxICV) 
     {
 	maxICV = ICV;
-	threshold = (bins[i] + bins[i+1]) / 2;
+	threshold = bins[i];
     }
   }
   return threshold;

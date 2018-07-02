@@ -1,4 +1,4 @@
-779203a9933fded19c34c5adc59cf9ad *DESCRIPTION
+d635975110a21281361c0ad16c23e46c *DESCRIPTION
 2da94449056940b840b36983eb5ed19f *NAMESPACE
 21b448d9bc3f27e1628869f613ab4d4e *R/DCT_denoising.R
 cf84f9561af6471dfec9aa5220d02fa4 *R/RcppExports.R
@@ -12,11 +12,11 @@ ef00196055b17bc7daa2d6a610e5a464 *R/simplest_color_balance.R
 539a4f272172637f826045c0d84cea77 *build/vignette.rds
 ec15009e2c673477a1627f028c89f163 *data/dogs.rda
 1112a29a75056c724539472827a62836 *inst/doc/gettingstarted.R
-ecf687bf86f992a7ec8c392f987e6edf *inst/doc/gettingstarted.Rmd
-23fb8fd6a73cc4cf076941191c4d63f4 *inst/doc/gettingstarted.html
-8adc60bd147752c75405707170c21648 *inst/doc/treat_colorimage.R
-67776c1f4f23804f852a07ddb07af0a3 *inst/doc/treat_colorimage.Rmd
-0033034000294f4306078c7952d4242a *inst/doc/treat_colorimage.html
+6b02188b5f5b1d5c77318a774e920f1c *inst/doc/gettingstarted.Rmd
+6236dccc3e264bb0fe7e8f91d302e14c *inst/doc/gettingstarted.html
+7fc76dedd67afbae83677de439824022 *inst/doc/treat_colorimage.R
+e72566cc06833c6b2f53ec808c152a1b *inst/doc/treat_colorimage.Rmd
+a640b51fba5dd7e3dc1f23fde1e8b520 *inst/doc/treat_colorimage.html
 867418976a59cd2f7125b5450a8f86cb *man/BalanceSimplest.Rd
 e67d429ffee4f49e95f17444a2692c21 *man/DenoiseDCT.Rd
 f406c28a3c325c037d7ba93a82e9ad99 *man/EqualizePiecewise.Rd
@@ -29,7 +29,7 @@ b343d5d92e9e6509dd1158906cb09a47 *man/GetHue.Rd
 24cd75c9540966cd8d77995625db112e *man/imagerExtra.Rd
 ab60c42ec186e85ad4b59dec1352caf1 *src/DCT_denoising.cpp
 9dd80389572ad2d557c20a53b802408e *src/RcppExports.cpp
-facc780742a0be15a7d264927878511b *src/iterative_triclass_thresholding.cpp
+e1d504ad0664835af2c71419c95f5512 *src/iterative_triclass_thresholding.cpp
 95b04753faa86784ccf4eab5a5bbbaa2 *src/piecewise_equalization.cpp
 652bf696e073cd5711e3aec0b412213c *src/screened_poisson_equation.cpp
 9985728551b3133bbb5de60c6553ce99 *src/simplest_color_balance.cpp
@@ -40,5 +40,5 @@ facc780742a0be15a7d264927878511b *src/iterative_triclass_thresholding.cpp
 29cea9d1e86e4c424f80639e9bc393bc *tests/testthat/test_simplest_color_balance.R
 9d12aad7b0a662474dd40b7dda5ed72b *tests/testthat/test_treat_color_image.R
 0169d53d812b19a319bfe30a8798288b *tests/testthat/test_utils.R
-ecf687bf86f992a7ec8c392f987e6edf *vignettes/gettingstarted.Rmd
-67776c1f4f23804f852a07ddb07af0a3 *vignettes/treat_colorimage.Rmd
+6b02188b5f5b1d5c77318a774e920f1c *vignettes/gettingstarted.Rmd
+e72566cc06833c6b2f53ec808c152a1b *vignettes/treat_colorimage.Rmd
