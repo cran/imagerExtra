@@ -5,12 +5,32 @@ DCTdenoising <- function(ipixelsR, width, height, sigma, flag_dct16x16) {
     .Call(`_imagerExtra_DCTdenoising`, ipixelsR, width, height, sigma, flag_dct16x16)
 }
 
+DCT2D_reorder <- function(mat) {
+    .Call(`_imagerExtra_DCT2D_reorder`, mat)
+}
+
+DCT2D_fromDFT <- function(mat) {
+    .Call(`_imagerExtra_DCT2D_fromDFT`, mat)
+}
+
+IDCT2D_toDFT <- function(mat) {
+    .Call(`_imagerExtra_IDCT2D_toDFT`, mat)
+}
+
+IDCT2D_retrievex <- function(mat) {
+    .Call(`_imagerExtra_IDCT2D_retrievex`, mat)
+}
+
 make_prob_otsu <- function(ordered, bins, intervalnumber, width, height) {
     .Call(`_imagerExtra_make_prob_otsu`, ordered, bins, intervalnumber, width, height)
 }
 
 get_th_otsu <- function(prob_otsu, bins) {
     .Call(`_imagerExtra_get_th_otsu`, prob_otsu, bins)
+}
+
+threshold_adaptive <- function(mat, k, windowsize, maxsd) {
+    .Call(`_imagerExtra_threshold_adaptive`, mat, k, windowsize, maxsd)
 }
 
 piecewise_transformation <- function(data, F, N, smax, smin, max, min, max_range, min_range) {

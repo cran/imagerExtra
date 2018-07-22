@@ -9,52 +9,78 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+<style type="text/css">
+
+body, td {
+   font-size: 15px;
+}
+code.r{
+  font-size: 15px;
+}
+pre {
+  font-size: 15px
+}
+</style>
+
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(warning=FALSE, message=FALSE, cache=FALSE, 
                comment=NA, verbose=TRUE, fig.width=5, fig.height=5, dev='jpeg',dev.args=list(quality=50))			   
 ```
 
-**imagerExtra** provides several advanced functions for image processing.
-
-I will introduce the functions briefly.
-
-**imagerExtara** is based on **imager**.
+imagerExtra provides several advanced functions for image processing based on **imager**.
 
 See the vignettes of **imager** if you aren't familiar with **imager**.
 
-# Preparation
-Most of the functions of **imagerExtra** are for grayscale image.
+The functions in imagerExtra are classified into 4 groups by their function.
 
-See the vignette **Treating Color Image with imagerExtra** if you want to treat color image with imagerExtra
+* Contrast Enhancement
+* Image Segmentation
+* Image Denoising
+* Others
+
+See below to know what functions are implemented.
+
+<br />
+
+## Preparation
+
+Most of the functions in imagerExtra are for grayscale image.
+
+See the vignette "Treating Color Image with imagerExtra" if you want to treat color image with imagerExtra.
 
 Let's prepare a grayscale image.
 
-If you want to treat color image, see the vignette "treating color image with imagerExtra".
-
-```{r, fig.width=4, fig.height=4, message=FALSE, dev='jpeg'}
+```{r, fig.width=3, fig.height=3, message=FALSE, dev='jpeg'}
 library(imagerExtra)
 g <- grayscale(boats)
 plot(g)
 ```
 
+<br />
 
+## Contrast Enhancement
 
-# Piecewise Affine Histogram Equalization
+The functions for contrast enhancement are 
 
-Piecewise Affine Equalization (PAE) enhances contrast of image.
+* EqualizePiecewise
+* BalanceSimplest
+* SPE
 
-PAE has three parameters: *N*, *smin*, and *smax*.
+### EqualizePiecewise (Piecewise Affine Histogram Equalization)
 
-However, we should not change *smin*. See [Jose-Luis Lisani, et al., IPOL, 2 (2012), pp. 243-265.](https://doi.org/10.5201/ipol.2012.lps-pae) for detail.
+EqualizePiecewise has three parameters: *N*, *smin*, and *smax*.
 
-That's why PAE has two parameters in practice.
+However, we should not change *smin*. 
 
-## the parameter *N*
-*N* controls how the input gray level will be mapped in the output image. 
+See [Jose-Luis Lisani, et al., IPOL, 2 (2012), pp. 243-265.](https://doi.org/10.5201/ipol.2012.lps-pae) for detail.
+
+The parameter *N* controls how the input gray level will be mapped in the output image. 
 
 We don't have a priori choice for *N*. You will tune *N* mainly.
 
-PAE acts as Histogram Equalization if *N* is large.
+The parameter *smax* controls the upper limit of contrast stretching.
+
+If you want to prevent excessive enhancement of contrast, you should make *smax* low.
 
 ```{r, fig.width=8, fig.height=8, dev='jpeg'}
 layout(matrix(1:4, 2, 2))
@@ -64,34 +90,13 @@ plot(EqualizePiecewise(g, 10), main = "N = 10")
 plot(EqualizePiecewise(g, 1000), main = "N = 1000")
 ```
 
-## the parameter *smax*
-*smax* controls the upper limit of contrast stretching.
+### BalanceSimplest (Simplest Color Balance)
 
-If you want to prevent excessive enhancement of contrast, you should make *smax* low.
+BalanceSimplest saturates a percentage *sleft* % of the pixels on the left side of the histogram, 
 
-
-
-# Simplest Color Balance
-
-Simplest Color Balance (SCB) enhances contrast of image.
-
-SCB assumes that objectives in image have moderate pixel values.
-
-That's why SCB saturates a percentage *sleft* % of the pixels on the left side of the histogram, and a percentage *sright* % of the pixels on the right side of the histogram.
+and a percentage *sright* % of the pixels on the right side of the histogram.
 
 See [Nicolas Limare, et al., IPOL, 1 (2011), pp. 297-315.](https://doi.org/10.5201/ipol.2011.llmps-scb) for detail.
-
-## the parameters *sleft* and *sright*
-*sleft* is a saturation percentage of the pixels on the left side of the histogram.
-
-*sright* is a saturation percentage of the pixels on the right side of the histogram.
-
-## the parameter *range*
-SCB applies affine transformation after saturating pixels.
-
-*range* defines the output range.
-
-Default of *range* is [0,255]. You may prefer [0,1].
 
 ```{r, fig.width=7, fig.height=7, dev='jpeg'}
 layout(matrix(1:2, 1, 2))
@@ -99,53 +104,44 @@ plot(g, main = "Original")
 plot(BalanceSimplest(g, 1, 1), main = "sleft = 1, sright = 1")
 ```
 
-
-
-# Screened Poisson Equation
-
-Screend Poisson Equalization (SPE) enhances contrast of image.
+### SPE (Screened Poisson Equation)
 
 The distinction of SPE is that SPE corrects the inhomogeneous background of image.
 
 See [Jean-Michel Morel, et al., IPOL, 4 (2014), pp. 16-29.](https://doi.org/10.5201/ipol.2014.84) for detail.
 
-Note that the performance of this function is bad because the implementation of 2D DCT is not efficient.
-
-## the parameter *lamda*
-
-*lamda* controls how strong corrects inhomogeneous background of image.
+The parameter *lamda* controls how strong corrects inhomogeneous background of image.
 
 SPE corrects inhomogeneous background strongly if *lamda* is large.
 
-## the parameters *s* and *range*
-
-SPE uses Simplest Color Balance. *s* and *range* are the parameters for Simplest Color Balance.
-
-*s* is used as both *sleft* and *sright*.
-
 ```{r, fig.width=7, fig.height=7, dev='jpeg'}
 layout(matrix(1:2, 1, 2))
-plot(g, main = "Original")
-plot(SPE(g, 1), main = "lamda = 1")
+gbirds <- load.example("birds") %>% grayscale()
+plot(gbirds, main = "Original")
+plot(SPE(gbirds, 0.01), main = "SPE (lamda = 0.01)")
 ```
 
+<br />
 
+## Image Denoising
 
-# DCT denoising
+The function for image denoising is
+
+* DenoiseDCT
+
+### DenoiseDCT (DCT denoising)
 
 DCT denoising is a simple and effective denoising algorithm using local DCT thresholding.
 
 See [Guoshen Yu, and Guillermo Sapiro, IPOL, 1 (2011), pp. 292-296.](https://doi.org/10.5201/ipol.2011.ys-dct) for detail.
 
-## the parameter *sdn*
+The parameter *sdn* determines how strong denoise a image.
 
-*sdn* is a standrd deviation of noise of image.
+Noise is strongly denoised if *sdn* is large.
 
-The noise is strongly denoised if *sdn* is large.
+The parameter *flag_dct16x16* determiens window size of local patches. 
 
-## the parameter *flag_dct16x16*
-
-*flag_dct16x16* determiens window size of local patches. DCT denoising uses 8x8 windows or 16x16 window.
+DenoiseDCT uses 8x8 windows or 16x16 window.
 
 Larger window size does not bring significant improvement when noise level is low.
 
@@ -160,31 +156,70 @@ DenoiseDCT(noisy, 0.1) %>% plot(., main = "Denoised (8x8 window)")
 DenoiseDCT(noisy, 0.1, flag_dct16x16 = TRUE) %>% plot(., main = "Denoised (16x16 window)")
 ```
 
+<br />
 
+## Image Segmentation
 
-# Iterative Triclass Thresholding
+The functions for image segmentation are
+
+* ThresholdTriclass
+* ThresholdAdaptive
+
+### ThresholdTriclass (Iterative Triclass Thresholding)
 
 Iterative triclass thresholding is an iterative thresholding technique.
 
 We need to set a rule to stop iteration.
 
 We have two options.
+
 * set preset threshold (*stopval*)
 * set repeat number (*repeatnum*)
 
-See [the intoroduction]https://shotaochi.github.io/2018/06/30/Iterative-Triclass-Thresholding.html) if you want to know about iterative triclass thresholding.
-
-## the parameter *stopval* and *repeatnum*
-
-*stopval* determines a preset threshold to stop iteration.
-
-*repeatnum* determines how many times we repeat.
-
 ```{r, fig.width=7, fig.height=7}
-g <- grayscale(dogs)
+gdogs <- grayscale(dogs)
 layout(matrix(1:4, 2, 2, byrow = TRUE))
-plot(g, main = "Original", axes=F)
-ThresholdTriclass(g, stopval = 0.01) %>% plot(main = "stopval = 0.01", axes=F)
-ThresholdTriclass(g, repeatnum = 1) %>% plot(main = "repeatnum = 1", axes=F)
-ThresholdTriclass(g, repeatnum = 3) %>% plot(main = "repeatnum = 3", axes=F)
+plot(gdogs, main = "Original", axes=F)
+ThresholdTriclass(gdogs, stopval = 0.001) %>% plot(main = "stopval = 0.001")
+ThresholdTriclass(gdogs, repeatnum = 1) %>% plot(main = "repeatnum = 1")
+ThresholdTriclass(gdogs, repeatnum = 3) %>% plot(main = "repeatnum = 3")
 ```
+
+### ThresholdAdaptive (Local Adaptive Thresholding)
+
+Local adaptive thresholding can extract objects from inhomogeneous background.
+
+You will tune the two paramters k and windowsize.
+
+Note that the parameter *range* determines max standard deviation.
+
+you should set *range* as [0,1] if you treat a image whose pixel values are in [0,1]. 
+
+```{r, fig.height=3}
+layout(matrix(1:2,1,2))
+plot(papers, main = "Original")
+hello <- ThresholdAdaptive(papers, 0.1, windowsize = 17, range = c(0,1))
+plot(hello, main = "Binarizesd")
+```
+
+## Others
+
+The functions classified as others are
+
+* Grayscale
+* GetHue
+* RestoreHue
+* OCR
+* OCR_data
+
+### Grayscale, GetHue, and RestoreHue
+
+These functions are for treating color image with imagerExtra.
+
+See the vignette "Treating Color Image with imagerExtra" for detail.
+
+### OCR and OCR_data
+
+These functions are shortcuts to the ocr function and ocr_data function of the R package **tesseract**.
+
+See the vignette "Optical Character Recognition with imagerExtra" for detail.

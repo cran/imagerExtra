@@ -2,7 +2,7 @@
 knitr::opts_chunk$set(warning=FALSE, message=FALSE, cache=FALSE, 
                comment=NA, verbose=TRUE, fig.width=5, fig.height=5, dev='jpeg',dev.args=list(quality=50))			   
 
-## ---- fig.width=4, fig.height=4, message=FALSE, dev='jpeg'---------------
+## ---- fig.width=3, fig.height=3, message=FALSE, dev='jpeg'---------------
 library(imagerExtra)
 g <- grayscale(boats)
 plot(g)
@@ -21,8 +21,9 @@ plot(BalanceSimplest(g, 1, 1), main = "sleft = 1, sright = 1")
 
 ## ---- fig.width=7, fig.height=7, dev='jpeg'------------------------------
 layout(matrix(1:2, 1, 2))
-plot(g, main = "Original")
-plot(SPE(g, 1), main = "lamda = 1")
+gbirds <- load.example("birds") %>% grayscale()
+plot(gbirds, main = "Original")
+plot(SPE(gbirds, 0.01), main = "SPE (lamda = 0.01)")
 
 ## ---- fig.width=7, fig.height=7, dev='jpeg'------------------------------
 noisy <- g + imnoise(dim = dim(g), sd = 0.1)
@@ -33,10 +34,16 @@ DenoiseDCT(noisy, 0.1) %>% plot(., main = "Denoised (8x8 window)")
 DenoiseDCT(noisy, 0.1, flag_dct16x16 = TRUE) %>% plot(., main = "Denoised (16x16 window)")
 
 ## ---- fig.width=7, fig.height=7------------------------------------------
-g <- grayscale(dogs)
+gdogs <- grayscale(dogs)
 layout(matrix(1:4, 2, 2, byrow = TRUE))
-plot(g, main = "Original", axes=F)
-ThresholdTriclass(g, stopval = 0.01) %>% plot(main = "stopval = 0.01", axes=F)
-ThresholdTriclass(g, repeatnum = 1) %>% plot(main = "repeatnum = 1", axes=F)
-ThresholdTriclass(g, repeatnum = 3) %>% plot(main = "repeatnum = 3", axes=F)
+plot(gdogs, main = "Original", axes=F)
+ThresholdTriclass(gdogs, stopval = 0.001) %>% plot(main = "stopval = 0.001")
+ThresholdTriclass(gdogs, repeatnum = 1) %>% plot(main = "repeatnum = 1")
+ThresholdTriclass(gdogs, repeatnum = 3) %>% plot(main = "repeatnum = 3")
+
+## ---- fig.height=3-------------------------------------------------------
+layout(matrix(1:2,1,2))
+plot(papers, main = "Original")
+hello <- ThresholdAdaptive(papers, 0.1, windowsize = 17, range = c(0,1))
+plot(hello, main = "Binarizesd")
 

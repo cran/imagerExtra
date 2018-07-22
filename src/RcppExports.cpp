@@ -20,6 +20,50 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// DCT2D_reorder
+Rcpp::NumericMatrix DCT2D_reorder(Rcpp::NumericMatrix mat);
+RcppExport SEXP _imagerExtra_DCT2D_reorder(SEXP matSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type mat(matSEXP);
+    rcpp_result_gen = Rcpp::wrap(DCT2D_reorder(mat));
+    return rcpp_result_gen;
+END_RCPP
+}
+// DCT2D_fromDFT
+Rcpp::NumericMatrix DCT2D_fromDFT(Rcpp::ComplexMatrix mat);
+RcppExport SEXP _imagerExtra_DCT2D_fromDFT(SEXP matSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::ComplexMatrix >::type mat(matSEXP);
+    rcpp_result_gen = Rcpp::wrap(DCT2D_fromDFT(mat));
+    return rcpp_result_gen;
+END_RCPP
+}
+// IDCT2D_toDFT
+Rcpp::ComplexMatrix IDCT2D_toDFT(Rcpp::NumericMatrix mat);
+RcppExport SEXP _imagerExtra_IDCT2D_toDFT(SEXP matSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type mat(matSEXP);
+    rcpp_result_gen = Rcpp::wrap(IDCT2D_toDFT(mat));
+    return rcpp_result_gen;
+END_RCPP
+}
+// IDCT2D_retrievex
+Rcpp::NumericMatrix IDCT2D_retrievex(Rcpp::NumericMatrix mat);
+RcppExport SEXP _imagerExtra_IDCT2D_retrievex(SEXP matSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type mat(matSEXP);
+    rcpp_result_gen = Rcpp::wrap(IDCT2D_retrievex(mat));
+    return rcpp_result_gen;
+END_RCPP
+}
 // make_prob_otsu
 Rcpp::NumericVector make_prob_otsu(Rcpp::NumericVector ordered, Rcpp::NumericVector bins, int intervalnumber, int width, int height);
 RcppExport SEXP _imagerExtra_make_prob_otsu(SEXP orderedSEXP, SEXP binsSEXP, SEXP intervalnumberSEXP, SEXP widthSEXP, SEXP heightSEXP) {
@@ -44,6 +88,20 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type prob_otsu(prob_otsuSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type bins(binsSEXP);
     rcpp_result_gen = Rcpp::wrap(get_th_otsu(prob_otsu, bins));
+    return rcpp_result_gen;
+END_RCPP
+}
+// threshold_adaptive
+Rcpp::NumericMatrix threshold_adaptive(Rcpp::NumericMatrix mat, double k, int windowsize, double maxsd);
+RcppExport SEXP _imagerExtra_threshold_adaptive(SEXP matSEXP, SEXP kSEXP, SEXP windowsizeSEXP, SEXP maxsdSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type mat(matSEXP);
+    Rcpp::traits::input_parameter< double >::type k(kSEXP);
+    Rcpp::traits::input_parameter< int >::type windowsize(windowsizeSEXP);
+    Rcpp::traits::input_parameter< double >::type maxsd(maxsdSEXP);
+    rcpp_result_gen = Rcpp::wrap(threshold_adaptive(mat, k, windowsize, maxsd));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -96,8 +154,13 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_imagerExtra_DCTdenoising", (DL_FUNC) &_imagerExtra_DCTdenoising, 5},
+    {"_imagerExtra_DCT2D_reorder", (DL_FUNC) &_imagerExtra_DCT2D_reorder, 1},
+    {"_imagerExtra_DCT2D_fromDFT", (DL_FUNC) &_imagerExtra_DCT2D_fromDFT, 1},
+    {"_imagerExtra_IDCT2D_toDFT", (DL_FUNC) &_imagerExtra_IDCT2D_toDFT, 1},
+    {"_imagerExtra_IDCT2D_retrievex", (DL_FUNC) &_imagerExtra_IDCT2D_retrievex, 1},
     {"_imagerExtra_make_prob_otsu", (DL_FUNC) &_imagerExtra_make_prob_otsu, 5},
     {"_imagerExtra_get_th_otsu", (DL_FUNC) &_imagerExtra_get_th_otsu, 2},
+    {"_imagerExtra_threshold_adaptive", (DL_FUNC) &_imagerExtra_threshold_adaptive, 4},
     {"_imagerExtra_piecewise_transformation", (DL_FUNC) &_imagerExtra_piecewise_transformation, 9},
     {"_imagerExtra_screened_poisson_dct", (DL_FUNC) &_imagerExtra_screened_poisson_dct, 2},
     {"_imagerExtra_saturateim", (DL_FUNC) &_imagerExtra_saturateim, 5},

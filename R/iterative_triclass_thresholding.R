@@ -6,18 +6,18 @@
 #$' @return double
 #$' @references Nobuyuki Otsu (1979) A threshold selection method from gray-level histograms. IEEE. 
 #$' @author Shota Ochi
-threshold_otsu <- function(im, intervalnumber = 1000)
-{
-dimim <- dim(im)
-ordered <- as.vector(im)
-ordered <- ordered[order(ordered)]
-minim <- ordered[1]
-maxim <- ordered[length(ordered)]
-bins <- seq(minim, maxim, length.out = intervalnumber + 1)
-prob_otsu <- make_prob_otsu(ordered, bins, intervalnumber, dimim[1], dimim[2])
-thresval <- get_th_otsu(prob_otsu, bins)
-return(thresval)
-}
+#threshold_otsu <- function(im, intervalnumber = 1000)
+#{
+#dimim <- dim(im)
+#ordered <- as.vector(im)
+#ordered <- ordered[order(ordered)]
+#minim <- ordered[1]
+#maxim <- ordered[length(ordered)]
+#bins <- seq(minim, maxim, length.out = intervalnumber + 1)
+#prob_otsu <- make_prob_otsu(ordered, bins, intervalnumber, dimim[1], dimim[2])
+#thresval <- get_th_otsu(prob_otsu, bins)
+#return(thresval)
+#}
 
 #' Iterative Triclass Thresholding
 #'
@@ -36,27 +36,19 @@ return(thresval)
 #' layout(matrix(1:4, 2, 2))
 #' plot(boats, main = "Original")
 #' plot(g, main = "Grayscale")
-#' threshold(g) %>% plot(main = "Otsu")
+#' threshold(g) %>% plot(main = "A Variant of Otsu")
 #' ThresholdTriclass(g) %>% plot(main = "Triclass")
-ThresholdTriclass <- function(im, stopval = 0.1, repeatnum, intervalnumber = 1000, returnvalue = FALSE)
+ThresholdTriclass <- function(im, stopval = 0.01, repeatnum, intervalnumber = 1000, returnvalue = FALSE)
 {
   #sanity check of im ,intervalnumber, and returnvalue
-  res_sanitycheck_im <- CheckSanityim(im)
-  res_sanitycheck_intervalnumber <- CheckSanitypositivenumeric(intervalnumber, "intervalnumber")
-  res_sanitycheck_returnvalue <- CheckSanitylogical(returnvalue, "returnvalue")
-  if (!all(c(res_sanitycheck_im, res_sanitycheck_intervalnumber, res_sanitycheck_returnvalue))) 
-  {
-    return(NULL)
-  }
+  CheckSanityim(im)
+  CheckSanitypositivenumeric(intervalnumber, "intervalnumber")
+  CheckSanitylogical(returnvalue, "returnvalue")
   
   if (missing(repeatnum))
   { 
     #sanity check of stopval
-	res_sanitycheck_stopval <- CheckSanitypositivenumeric(stopval, "stopval")
-	if(!res_sanitycheck_stopval)
-	{
-	  return(NULL)
-	}
+	CheckSanitypositivenumeric(stopval, "stopval")
 	
     dimim <- dim(im)
     ordered <- as.vector(im)
@@ -70,17 +62,23 @@ ThresholdTriclass <- function(im, stopval = 0.1, repeatnum, intervalnumber = 100
     thresval_pre <- thresval + 2 * stopval
     while (TRUE)
     {
-	  indexf <- bins > thresval
+	  indexf <- ordered > thresval
 	  indexb <- !indexf
-      myu1 <- mean(bins[indexf])
-	  myu0 <- mean(bins[indexb])
+      myu1 <- mean(ordered[indexf])
+	  myu0 <- mean(ordered[indexb])
+	  ordered <- ordered[ordered >= myu0 & ordered <= myu1]
 	  if (is.nan(myu0) || is.nan(myu1)) 
 	  {
 	    break
 	  }
       indexTBD <- bins >= myu0 & bins <= myu1
 	  bins <- bins[indexTBD]
-	  prob_otsu <- prob_otsu[indexTBD]     
+	  prob_otsu <- prob_otsu[indexTBD]
+      if (sum(prob_otsu) == 0 || length(prob_otsu) < 2)
+	  {
+	    break
+	  }
+      prob_otsu <- prob_otsu / sum(prob_otsu)	  
 	  thresval <- get_th_otsu(prob_otsu, bins)
 	  if (abs(thresval - thresval_pre) < stopval) 
 	  {
@@ -90,11 +88,7 @@ ThresholdTriclass <- function(im, stopval = 0.1, repeatnum, intervalnumber = 100
     }
   } else {
     #sanity check of repeatnum (repeatnum >= 1)
-	res_sanitycheck_repeatnum <- CheckSanitypositivenumeric(repeatnum, "repeatnum")
-	if(!res_sanitycheck_repeatnum)
-	{
-	  return(NULL)
-	}
+	CheckSanitypositivenumeric(repeatnum, "repeatnum")
 	
     dimim <- dim(im)
     ordered <- as.vector(im)
@@ -107,10 +101,11 @@ ThresholdTriclass <- function(im, stopval = 0.1, repeatnum, intervalnumber = 100
     thresval <- get_th_otsu(prob_otsu, bins)
 	for (i in seq_len(as.integer(repeatnum) - 1))
 	{
-	  indexf <- bins > thresval
+	  indexf <- ordered > thresval
 	  indexb <- !indexf
-      myu1 <- mean(bins[indexf])
-	  myu0 <- mean(bins[indexb])
+      myu1 <- mean(ordered[indexf])
+	  myu0 <- mean(ordered[indexb])
+	  ordered <- ordered[ordered >= myu0 & ordered <= myu1]
 	  if (is.nan(myu0) || is.nan(myu1)) 
 	  {
         message("Iteration was stopped in the middle.")          
@@ -119,10 +114,16 @@ ThresholdTriclass <- function(im, stopval = 0.1, repeatnum, intervalnumber = 100
       indexTBD <- bins >= myu0 & bins <= myu1
 	  bins <- bins[indexTBD]
 	  prob_otsu <- prob_otsu[indexTBD]
+	  if (sum(prob_otsu) == 0  || length(prob_otsu) < 2)
+	  {
+	    message("Iteration was stopped in the middle.")  
+	    break
+	  }
+      prob_otsu <- prob_otsu / sum(prob_otsu)
 	  thresval <- get_th_otsu(prob_otsu, bins)
 	} 
   }
-  if(returnvalue) 
+  if (returnvalue) 
   {  
     return(thresval)
   }

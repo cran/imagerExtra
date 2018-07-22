@@ -7,32 +7,30 @@
 NULL
 
 #' @useDynLib imagerExtra, .registration=TRUE
-#' @importFrom dtt mvdct
+#' @importFrom fftwtools fftw2d
 #' @importFrom imager add.color
 #' @importFrom imager as.cimg
+#' @importFrom imager as.pixset
 #' @importFrom imager at<-
 #' @importFrom imager B
 #' @importFrom imager B<-
 #' @importFrom imager depth
 #' @importFrom imager G
 #' @importFrom imager G<-
+#' @importFrom imager height
 #' @importFrom imager imfill
 #' @importFrom imager is.cimg
+#' @importFrom imager is.pixset
 #' @importFrom imager R
 #' @importFrom imager R<-
+#' @importFrom imager save.image
 #' @importFrom imager spectrum
 #' @importFrom imager threshold
 #' @importFrom imager where
+#' @importFrom imager width
 #' @importFrom magrittr %>%
 #' @importFrom Rcpp sourceCpp
+#' @importFrom tesseract ocr
+#' @importFrom tesseract ocr_data
+#' @importFrom tesseract tesseract
 NULL
-
-#' Photograph of a dog from GAHAG
-#'
-#' This photograph was downloaded from http://gahag.net/img/201603/03s/gahag-0062116383-1.jpg.
-#' Its size was reduced by half to speed up loading and save space.
-#' @format an image of class cimg
-#' @source \url{http://gahag.net/img/201603/03s/gahag-0062116383-1.jpg}
-"dogs"
-
-
