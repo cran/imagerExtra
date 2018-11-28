@@ -1,5 +1,6 @@
-#' Enhance contrast of image by Piecewise Affine Equalization
+#' Piecewise Affine Histogram Equalization
 #'
+#' enhance contrast of image by piecewise affine histogram equalization
 #' @param im a grayscale image of class cimg
 #' @param N number of subintervals of partition. N controls how the input gray levels will be mapped in the output image.
 #' if N is large, Piecewise Affine Equalization and Histogram Equalization are very similar.
@@ -19,15 +20,15 @@
 #' EqualizePiecewise(boats_g, 10) %>% plot(., main = "Piecewise Affine Equalization")
 EqualizePiecewise <- function(im, N, smax = 255, smin = 0, range = c(0, 255))
 {
-    CheckSanityim(im)
-	CheckSanityrange(range)
-	dim_im <- dim(im)
-	im <- as.vector(im)
-	im_sorted <- im[order(im)]
-	max_im <- max(im)
-	min_im <- min(im)
-	res <- piecewise_transformation(im, im_sorted, N, smax, smin, max_im, min_im, range[2], range[1])
-	return(as.cimg(res, dim = dim_im))
+  CheckSanityim(im)
+  CheckSanityrange(range)
+  dim_im <- dim(im)
+  im <- as.vector(im)
+  im_sorted <- im[order(im)]
+  max_im <- max(im)
+  min_im <- min(im)
+  res <- piecewise_transformation(im, im_sorted, N, smax, smin, max_im, min_im, range[2], range[1])
+  return(as.cimg(res, dim = dim_im))
 }
 
 

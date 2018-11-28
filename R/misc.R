@@ -17,6 +17,7 @@ NULL
 #' @importFrom imager depth
 #' @importFrom imager G
 #' @importFrom imager G<-
+#' @importFrom imager grabRect
 #' @importFrom imager height
 #' @importFrom imager imfill
 #' @importFrom imager is.cimg
@@ -30,7 +31,4 @@ NULL
 #' @importFrom imager width
 #' @importFrom magrittr %>%
 #' @importFrom Rcpp sourceCpp
-#' @importFrom tesseract ocr
-#' @importFrom tesseract ocr_data
-#' @importFrom tesseract tesseract
 NULL

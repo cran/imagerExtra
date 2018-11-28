@@ -5,6 +5,34 @@ DCTdenoising <- function(ipixelsR, width, height, sigma, flag_dct16x16) {
     .Call(`_imagerExtra_DCTdenoising`, ipixelsR, width, height, sigma, flag_dct16x16)
 }
 
+make_histogram_ADPHE <- function(ordered, interval) {
+    .Call(`_imagerExtra_make_histogram_ADPHE`, ordered, interval)
+}
+
+find_local_maximum_ADPHE <- function(hist, n) {
+    .Call(`_imagerExtra_find_local_maximum_ADPHE`, hist, n)
+}
+
+modify_histogram_ADPHE <- function(imhist, t_down, t_up) {
+    .Call(`_imagerExtra_modify_histogram_ADPHE`, imhist, t_down, t_up)
+}
+
+histogram_equalization_ADPHE <- function(im, interval2, imhist_modified, min_range, max_range) {
+    .Call(`_imagerExtra_histogram_equalization_ADPHE`, im, interval2, imhist_modified, min_range, max_range)
+}
+
+ChanVeseInitPhi <- function(Width, Height) {
+    .Call(`_imagerExtra_ChanVeseInitPhi`, Width, Height)
+}
+
+ChanVeseInitPhi_Rect <- function(Width, Height, rect) {
+    .Call(`_imagerExtra_ChanVeseInitPhi_Rect`, Width, Height, rect)
+}
+
+ChanVese <- function(im, Mu, Nu, Lambda1, Lambda2, tol, maxiter, dt, phi) {
+    .Call(`_imagerExtra_ChanVese`, im, Mu, Nu, Lambda1, Lambda2, tol, maxiter, dt, phi)
+}
+
 DCT2D_reorder <- function(mat) {
     .Call(`_imagerExtra_DCT2D_reorder`, mat)
 }
@@ -21,6 +49,14 @@ IDCT2D_retrievex <- function(mat) {
     .Call(`_imagerExtra_IDCT2D_retrievex`, mat)
 }
 
+make_histogram_fuzzy <- function(ordered, interval) {
+    .Call(`_imagerExtra_make_histogram_fuzzy`, ordered, interval)
+}
+
+fuzzy_threshold <- function(imhist, interval, n, maxiter, omegamax, omegamin, c1, c2, mutrate, vmax, localsearch) {
+    .Call(`_imagerExtra_fuzzy_threshold`, imhist, interval, n, maxiter, omegamax, omegamin, c1, c2, mutrate, vmax, localsearch)
+}
+
 make_prob_otsu <- function(ordered, bins, intervalnumber, width, height) {
     .Call(`_imagerExtra_make_prob_otsu`, ordered, bins, intervalnumber, width, height)
 }
@@ -31,6 +67,22 @@ get_th_otsu <- function(prob_otsu, bins) {
 
 threshold_adaptive <- function(mat, k, windowsize, maxsd) {
     .Call(`_imagerExtra_threshold_adaptive`, mat, k, windowsize, maxsd)
+}
+
+make_density_multilevel <- function(ordered, interval) {
+    .Call(`_imagerExtra_make_density_multilevel`, ordered, interval)
+}
+
+make_integral_density_multilevel <- function(density) {
+    .Call(`_imagerExtra_make_integral_density_multilevel`, density)
+}
+
+get_threshold_multilevel <- function(im_density, im_integral_density, n_thres, sn, mcn, limit) {
+    .Call(`_imagerExtra_get_threshold_multilevel`, im_density, im_integral_density, n_thres, sn, mcn, limit)
+}
+
+threshold_multilevel <- function(im, thresvals) {
+    .Call(`_imagerExtra_threshold_multilevel`, im, thresvals)
 }
 
 piecewise_transformation <- function(data, F, N, smax, smin, max, min, max_range, min_range) {

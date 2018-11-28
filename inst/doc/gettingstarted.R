@@ -2,30 +2,42 @@
 knitr::opts_chunk$set(warning=FALSE, message=FALSE, cache=FALSE, 
                comment=NA, verbose=TRUE, fig.width=5, fig.height=5, dev='jpeg',dev.args=list(quality=50))			   
 
-## ---- fig.width=3, fig.height=3, message=FALSE, dev='jpeg'---------------
+## ---- fig.width=5, fig.height=5, message=FALSE---------------------------
 library(imagerExtra)
 g <- grayscale(boats)
-plot(g)
+gd <- grayscale(dogs)
+layout(matrix(1:2,1,2))
+plot(g, main = "boats")
+plot(gd, main = "dogs")
 
-## ---- fig.width=8, fig.height=8, dev='jpeg'------------------------------
+## ---- fig.width=8, fig.height=8------------------------------------------
 layout(matrix(1:4, 2, 2))
 plot(g, main = "Original")
-plot(EqualizePiecewise(g, 2), main = "N = 2")
-plot(EqualizePiecewise(g, 10), main = "N = 10")
-plot(EqualizePiecewise(g, 1000), main = "N = 1000")
+EqualizePiecewise(g, 2) %>% plot(main = "N = 2")
+EqualizePiecewise(g, 10) %>% plot(main = "N = 10")
+EqualizePiecewise(g, 1000) %>% plot(main = "N = 1000")
 
-## ---- fig.width=7, fig.height=7, dev='jpeg'------------------------------
+## ---- fig.width=7--------------------------------------------------------
 layout(matrix(1:2, 1, 2))
 plot(g, main = "Original")
-plot(BalanceSimplest(g, 1, 1), main = "sleft = 1, sright = 1")
+BalanceSimplest(g, 1, 1) %>% plot(main = "sleft = 1, sright = 1")
 
-## ---- fig.width=7, fig.height=7, dev='jpeg'------------------------------
+## ---- fig.height=3-------------------------------------------------------
 layout(matrix(1:2, 1, 2))
-gbirds <- load.example("birds") %>% grayscale()
-plot(gbirds, main = "Original")
-plot(SPE(gbirds, 0.01), main = "SPE (lamda = 0.01)")
+plot(papers, main = "Original")
+SPE(papers, 0.1) %>% plot(main = "SPE (lamda = 0.1)")
 
-## ---- fig.width=7, fig.height=7, dev='jpeg'------------------------------
+## ---- fig.width=7--------------------------------------------------------
+layout(matrix(1:2, 1, 2))
+plot(gd, main = "Original")
+EqualizeDP(gd, 25, 110) %>% plot(main = "DPHE")
+
+## ---- fig.width=7--------------------------------------------------------
+layout(matrix(1:2, 1, 2))
+plot(gd, main = "Original")
+EqualizeADP(gd) %>% plot(main = "ADPHE")
+
+## ---- fig.width=7, fig.height=7------------------------------------------
 noisy <- g + imnoise(dim = dim(g), sd = 0.1)
 layout(matrix(c(1,3,2,4), 2, 2))
 plot(g, main = "Original")
@@ -46,4 +58,19 @@ layout(matrix(1:2,1,2))
 plot(papers, main = "Original")
 hello <- ThresholdAdaptive(papers, 0.1, windowsize = 17, range = c(0,1))
 plot(hello, main = "Binarizesd")
+
+## ---- fig.width=7--------------------------------------------------------
+layout(matrix(1:2,1,2))
+plot(g, main = "Original")
+ThresholdFuzzy(g) %>% plot(main = "Fuzzy Thresholding")
+
+## ---- fig.width=7--------------------------------------------------------
+layout(matrix(1:2,1,2))
+ThresholdML(g, k = 3) %>% plot(main = "Level of Thresholds: 3")
+ThresholdML(g, thr = c(0.2, 0.4, 0.6)) %>% plot(main = "Values of Thresholds: 0.2, 0.4, and 0.6")
+
+## ---- fig.width=7--------------------------------------------------------
+layout(matrix(1:2, 1, 2))
+plot(gd, main = "Original")
+SegmentCV(gd, lambda2 = 15) %>% plot(main = "Chan-Vese")
 

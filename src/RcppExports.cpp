@@ -20,6 +20,102 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// make_histogram_ADPHE
+Rcpp::NumericVector make_histogram_ADPHE(const Rcpp::NumericVector& ordered, const Rcpp::NumericVector& interval);
+RcppExport SEXP _imagerExtra_make_histogram_ADPHE(SEXP orderedSEXP, SEXP intervalSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type ordered(orderedSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type interval(intervalSEXP);
+    rcpp_result_gen = Rcpp::wrap(make_histogram_ADPHE(ordered, interval));
+    return rcpp_result_gen;
+END_RCPP
+}
+// find_local_maximum_ADPHE
+Rcpp::NumericVector find_local_maximum_ADPHE(const Rcpp::NumericVector& hist, int n);
+RcppExport SEXP _imagerExtra_find_local_maximum_ADPHE(SEXP histSEXP, SEXP nSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type hist(histSEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    rcpp_result_gen = Rcpp::wrap(find_local_maximum_ADPHE(hist, n));
+    return rcpp_result_gen;
+END_RCPP
+}
+// modify_histogram_ADPHE
+Rcpp::NumericVector modify_histogram_ADPHE(const Rcpp::NumericVector& imhist, double t_down, double t_up);
+RcppExport SEXP _imagerExtra_modify_histogram_ADPHE(SEXP imhistSEXP, SEXP t_downSEXP, SEXP t_upSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type imhist(imhistSEXP);
+    Rcpp::traits::input_parameter< double >::type t_down(t_downSEXP);
+    Rcpp::traits::input_parameter< double >::type t_up(t_upSEXP);
+    rcpp_result_gen = Rcpp::wrap(modify_histogram_ADPHE(imhist, t_down, t_up));
+    return rcpp_result_gen;
+END_RCPP
+}
+// histogram_equalization_ADPHE
+Rcpp::NumericVector histogram_equalization_ADPHE(const Rcpp::NumericMatrix& im, const Rcpp::NumericVector& interval2, const Rcpp::NumericVector& imhist_modified, double min_range, double max_range);
+RcppExport SEXP _imagerExtra_histogram_equalization_ADPHE(SEXP imSEXP, SEXP interval2SEXP, SEXP imhist_modifiedSEXP, SEXP min_rangeSEXP, SEXP max_rangeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type im(imSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type interval2(interval2SEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type imhist_modified(imhist_modifiedSEXP);
+    Rcpp::traits::input_parameter< double >::type min_range(min_rangeSEXP);
+    Rcpp::traits::input_parameter< double >::type max_range(max_rangeSEXP);
+    rcpp_result_gen = Rcpp::wrap(histogram_equalization_ADPHE(im, interval2, imhist_modified, min_range, max_range));
+    return rcpp_result_gen;
+END_RCPP
+}
+// ChanVeseInitPhi
+Rcpp::NumericMatrix ChanVeseInitPhi(int Width, int Height);
+RcppExport SEXP _imagerExtra_ChanVeseInitPhi(SEXP WidthSEXP, SEXP HeightSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type Width(WidthSEXP);
+    Rcpp::traits::input_parameter< int >::type Height(HeightSEXP);
+    rcpp_result_gen = Rcpp::wrap(ChanVeseInitPhi(Width, Height));
+    return rcpp_result_gen;
+END_RCPP
+}
+// ChanVeseInitPhi_Rect
+Rcpp::NumericMatrix ChanVeseInitPhi_Rect(int Width, int Height, Rcpp::IntegerVector rect);
+RcppExport SEXP _imagerExtra_ChanVeseInitPhi_Rect(SEXP WidthSEXP, SEXP HeightSEXP, SEXP rectSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type Width(WidthSEXP);
+    Rcpp::traits::input_parameter< int >::type Height(HeightSEXP);
+    Rcpp::traits::input_parameter< Rcpp::IntegerVector >::type rect(rectSEXP);
+    rcpp_result_gen = Rcpp::wrap(ChanVeseInitPhi_Rect(Width, Height, rect));
+    return rcpp_result_gen;
+END_RCPP
+}
+// ChanVese
+Rcpp::List ChanVese(Rcpp::NumericMatrix im, double Mu, double Nu, double Lambda1, double Lambda2, double tol, int maxiter, double dt, Rcpp::NumericMatrix phi);
+RcppExport SEXP _imagerExtra_ChanVese(SEXP imSEXP, SEXP MuSEXP, SEXP NuSEXP, SEXP Lambda1SEXP, SEXP Lambda2SEXP, SEXP tolSEXP, SEXP maxiterSEXP, SEXP dtSEXP, SEXP phiSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type im(imSEXP);
+    Rcpp::traits::input_parameter< double >::type Mu(MuSEXP);
+    Rcpp::traits::input_parameter< double >::type Nu(NuSEXP);
+    Rcpp::traits::input_parameter< double >::type Lambda1(Lambda1SEXP);
+    Rcpp::traits::input_parameter< double >::type Lambda2(Lambda2SEXP);
+    Rcpp::traits::input_parameter< double >::type tol(tolSEXP);
+    Rcpp::traits::input_parameter< int >::type maxiter(maxiterSEXP);
+    Rcpp::traits::input_parameter< double >::type dt(dtSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type phi(phiSEXP);
+    rcpp_result_gen = Rcpp::wrap(ChanVese(im, Mu, Nu, Lambda1, Lambda2, tol, maxiter, dt, phi));
+    return rcpp_result_gen;
+END_RCPP
+}
 // DCT2D_reorder
 Rcpp::NumericMatrix DCT2D_reorder(Rcpp::NumericMatrix mat);
 RcppExport SEXP _imagerExtra_DCT2D_reorder(SEXP matSEXP) {
@@ -64,6 +160,39 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// make_histogram_fuzzy
+Rcpp::NumericVector make_histogram_fuzzy(Rcpp::NumericVector ordered, Rcpp::NumericVector interval);
+RcppExport SEXP _imagerExtra_make_histogram_fuzzy(SEXP orderedSEXP, SEXP intervalSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type ordered(orderedSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type interval(intervalSEXP);
+    rcpp_result_gen = Rcpp::wrap(make_histogram_fuzzy(ordered, interval));
+    return rcpp_result_gen;
+END_RCPP
+}
+// fuzzy_threshold
+double fuzzy_threshold(Rcpp::NumericVector imhist, Rcpp::NumericVector interval, int n, int maxiter, double omegamax, double omegamin, double c1, double c2, double mutrate, double vmax, int localsearch);
+RcppExport SEXP _imagerExtra_fuzzy_threshold(SEXP imhistSEXP, SEXP intervalSEXP, SEXP nSEXP, SEXP maxiterSEXP, SEXP omegamaxSEXP, SEXP omegaminSEXP, SEXP c1SEXP, SEXP c2SEXP, SEXP mutrateSEXP, SEXP vmaxSEXP, SEXP localsearchSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type imhist(imhistSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type interval(intervalSEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< int >::type maxiter(maxiterSEXP);
+    Rcpp::traits::input_parameter< double >::type omegamax(omegamaxSEXP);
+    Rcpp::traits::input_parameter< double >::type omegamin(omegaminSEXP);
+    Rcpp::traits::input_parameter< double >::type c1(c1SEXP);
+    Rcpp::traits::input_parameter< double >::type c2(c2SEXP);
+    Rcpp::traits::input_parameter< double >::type mutrate(mutrateSEXP);
+    Rcpp::traits::input_parameter< double >::type vmax(vmaxSEXP);
+    Rcpp::traits::input_parameter< int >::type localsearch(localsearchSEXP);
+    rcpp_result_gen = Rcpp::wrap(fuzzy_threshold(imhist, interval, n, maxiter, omegamax, omegamin, c1, c2, mutrate, vmax, localsearch));
+    return rcpp_result_gen;
+END_RCPP
+}
 // make_prob_otsu
 Rcpp::NumericVector make_prob_otsu(Rcpp::NumericVector ordered, Rcpp::NumericVector bins, int intervalnumber, int width, int height);
 RcppExport SEXP _imagerExtra_make_prob_otsu(SEXP orderedSEXP, SEXP binsSEXP, SEXP intervalnumberSEXP, SEXP widthSEXP, SEXP heightSEXP) {
@@ -102,6 +231,57 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type windowsize(windowsizeSEXP);
     Rcpp::traits::input_parameter< double >::type maxsd(maxsdSEXP);
     rcpp_result_gen = Rcpp::wrap(threshold_adaptive(mat, k, windowsize, maxsd));
+    return rcpp_result_gen;
+END_RCPP
+}
+// make_density_multilevel
+Rcpp::NumericVector make_density_multilevel(Rcpp::NumericVector ordered, Rcpp::NumericVector interval);
+RcppExport SEXP _imagerExtra_make_density_multilevel(SEXP orderedSEXP, SEXP intervalSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type ordered(orderedSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type interval(intervalSEXP);
+    rcpp_result_gen = Rcpp::wrap(make_density_multilevel(ordered, interval));
+    return rcpp_result_gen;
+END_RCPP
+}
+// make_integral_density_multilevel
+Rcpp::NumericVector make_integral_density_multilevel(Rcpp::NumericVector density);
+RcppExport SEXP _imagerExtra_make_integral_density_multilevel(SEXP densitySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type density(densitySEXP);
+    rcpp_result_gen = Rcpp::wrap(make_integral_density_multilevel(density));
+    return rcpp_result_gen;
+END_RCPP
+}
+// get_threshold_multilevel
+Rcpp::IntegerVector get_threshold_multilevel(Rcpp::NumericVector im_density, Rcpp::NumericVector im_integral_density, int n_thres, int sn, int mcn, int limit);
+RcppExport SEXP _imagerExtra_get_threshold_multilevel(SEXP im_densitySEXP, SEXP im_integral_densitySEXP, SEXP n_thresSEXP, SEXP snSEXP, SEXP mcnSEXP, SEXP limitSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type im_density(im_densitySEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type im_integral_density(im_integral_densitySEXP);
+    Rcpp::traits::input_parameter< int >::type n_thres(n_thresSEXP);
+    Rcpp::traits::input_parameter< int >::type sn(snSEXP);
+    Rcpp::traits::input_parameter< int >::type mcn(mcnSEXP);
+    Rcpp::traits::input_parameter< int >::type limit(limitSEXP);
+    rcpp_result_gen = Rcpp::wrap(get_threshold_multilevel(im_density, im_integral_density, n_thres, sn, mcn, limit));
+    return rcpp_result_gen;
+END_RCPP
+}
+// threshold_multilevel
+Rcpp::NumericMatrix threshold_multilevel(Rcpp::NumericMatrix im, Rcpp::NumericVector thresvals);
+RcppExport SEXP _imagerExtra_threshold_multilevel(SEXP imSEXP, SEXP thresvalsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type im(imSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type thresvals(thresvalsSEXP);
+    rcpp_result_gen = Rcpp::wrap(threshold_multilevel(im, thresvals));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -154,13 +334,26 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_imagerExtra_DCTdenoising", (DL_FUNC) &_imagerExtra_DCTdenoising, 5},
+    {"_imagerExtra_make_histogram_ADPHE", (DL_FUNC) &_imagerExtra_make_histogram_ADPHE, 2},
+    {"_imagerExtra_find_local_maximum_ADPHE", (DL_FUNC) &_imagerExtra_find_local_maximum_ADPHE, 2},
+    {"_imagerExtra_modify_histogram_ADPHE", (DL_FUNC) &_imagerExtra_modify_histogram_ADPHE, 3},
+    {"_imagerExtra_histogram_equalization_ADPHE", (DL_FUNC) &_imagerExtra_histogram_equalization_ADPHE, 5},
+    {"_imagerExtra_ChanVeseInitPhi", (DL_FUNC) &_imagerExtra_ChanVeseInitPhi, 2},
+    {"_imagerExtra_ChanVeseInitPhi_Rect", (DL_FUNC) &_imagerExtra_ChanVeseInitPhi_Rect, 3},
+    {"_imagerExtra_ChanVese", (DL_FUNC) &_imagerExtra_ChanVese, 9},
     {"_imagerExtra_DCT2D_reorder", (DL_FUNC) &_imagerExtra_DCT2D_reorder, 1},
     {"_imagerExtra_DCT2D_fromDFT", (DL_FUNC) &_imagerExtra_DCT2D_fromDFT, 1},
     {"_imagerExtra_IDCT2D_toDFT", (DL_FUNC) &_imagerExtra_IDCT2D_toDFT, 1},
     {"_imagerExtra_IDCT2D_retrievex", (DL_FUNC) &_imagerExtra_IDCT2D_retrievex, 1},
+    {"_imagerExtra_make_histogram_fuzzy", (DL_FUNC) &_imagerExtra_make_histogram_fuzzy, 2},
+    {"_imagerExtra_fuzzy_threshold", (DL_FUNC) &_imagerExtra_fuzzy_threshold, 11},
     {"_imagerExtra_make_prob_otsu", (DL_FUNC) &_imagerExtra_make_prob_otsu, 5},
     {"_imagerExtra_get_th_otsu", (DL_FUNC) &_imagerExtra_get_th_otsu, 2},
     {"_imagerExtra_threshold_adaptive", (DL_FUNC) &_imagerExtra_threshold_adaptive, 4},
+    {"_imagerExtra_make_density_multilevel", (DL_FUNC) &_imagerExtra_make_density_multilevel, 2},
+    {"_imagerExtra_make_integral_density_multilevel", (DL_FUNC) &_imagerExtra_make_integral_density_multilevel, 1},
+    {"_imagerExtra_get_threshold_multilevel", (DL_FUNC) &_imagerExtra_get_threshold_multilevel, 6},
+    {"_imagerExtra_threshold_multilevel", (DL_FUNC) &_imagerExtra_threshold_multilevel, 2},
     {"_imagerExtra_piecewise_transformation", (DL_FUNC) &_imagerExtra_piecewise_transformation, 9},
     {"_imagerExtra_screened_poisson_dct", (DL_FUNC) &_imagerExtra_screened_poisson_dct, 2},
     {"_imagerExtra_saturateim", (DL_FUNC) &_imagerExtra_saturateim, 5},

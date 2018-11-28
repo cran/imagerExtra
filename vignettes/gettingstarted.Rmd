@@ -27,18 +27,16 @@ knitr::opts_chunk$set(warning=FALSE, message=FALSE, cache=FALSE,
                comment=NA, verbose=TRUE, fig.width=5, fig.height=5, dev='jpeg',dev.args=list(quality=50))			   
 ```
 
-imagerExtra provides several advanced functions for image processing based on **imager**.
+imagerExtra provides advanced functions for image processing based on the R package imager.
 
-See the vignettes of **imager** if you aren't familiar with **imager**.
-
-The functions in imagerExtra are classified into 4 groups by their function.
+The functions in imagerExtra are classified into 4 groups by their functions.
 
 * Contrast Enhancement
-* Image Segmentation
-* Image Denoising
+* Segmentation
+* Denoising
 * Others
 
-See below to know what functions are implemented.
+See below to know what functions imagerExtra provides.
 
 <br />
 
@@ -46,14 +44,17 @@ See below to know what functions are implemented.
 
 Most of the functions in imagerExtra are for grayscale image.
 
-See the vignette "Treating Color Image with imagerExtra" if you want to treat color image with imagerExtra.
+See the vignette [Treating Color Image with imagerExtra](https://cran.r-project.org/package=imagerExtra/vignettes/treat_colorimage.html) if you want to treat color image with imagerExtra.
 
-Let's prepare a grayscale image.
+Let's prepare grayscale images.
 
-```{r, fig.width=3, fig.height=3, message=FALSE, dev='jpeg'}
+```{r, fig.width=5, fig.height=5, message=FALSE}
 library(imagerExtra)
 g <- grayscale(boats)
-plot(g)
+gd <- grayscale(dogs)
+layout(matrix(1:2,1,2))
+plot(g, main = "boats")
+plot(gd, main = "dogs")
 ```
 
 <br />
@@ -65,6 +66,8 @@ The functions for contrast enhancement are
 * EqualizePiecewise
 * BalanceSimplest
 * SPE
+* EqualizeDP
+* EqualizeADP
 
 ### EqualizePiecewise (Piecewise Affine Histogram Equalization)
 
@@ -82,12 +85,12 @@ The parameter *smax* controls the upper limit of contrast stretching.
 
 If you want to prevent excessive enhancement of contrast, you should make *smax* low.
 
-```{r, fig.width=8, fig.height=8, dev='jpeg'}
+```{r, fig.width=8, fig.height=8}
 layout(matrix(1:4, 2, 2))
 plot(g, main = "Original")
-plot(EqualizePiecewise(g, 2), main = "N = 2")
-plot(EqualizePiecewise(g, 10), main = "N = 10")
-plot(EqualizePiecewise(g, 1000), main = "N = 1000")
+EqualizePiecewise(g, 2) %>% plot(main = "N = 2")
+EqualizePiecewise(g, 10) %>% plot(main = "N = 10")
+EqualizePiecewise(g, 1000) %>% plot(main = "N = 1000")
 ```
 
 ### BalanceSimplest (Simplest Color Balance)
@@ -98,10 +101,10 @@ and a percentage *sright* % of the pixels on the right side of the histogram.
 
 See [Nicolas Limare, et al., IPOL, 1 (2011), pp. 297-315.](https://doi.org/10.5201/ipol.2011.llmps-scb) for detail.
 
-```{r, fig.width=7, fig.height=7, dev='jpeg'}
+```{r, fig.width=7}
 layout(matrix(1:2, 1, 2))
 plot(g, main = "Original")
-plot(BalanceSimplest(g, 1, 1), main = "sleft = 1, sright = 1")
+BalanceSimplest(g, 1, 1) %>% plot(main = "sleft = 1, sright = 1")
 ```
 
 ### SPE (Screened Poisson Equation)
@@ -114,16 +117,47 @@ The parameter *lamda* controls how strong corrects inhomogeneous background of i
 
 SPE corrects inhomogeneous background strongly if *lamda* is large.
 
-```{r, fig.width=7, fig.height=7, dev='jpeg'}
+```{r, fig.height=3}
 layout(matrix(1:2, 1, 2))
-gbirds <- load.example("birds") %>% grayscale()
-plot(gbirds, main = "Original")
-plot(SPE(gbirds, 0.01), main = "SPE (lamda = 0.01)")
+plot(papers, main = "Original")
+SPE(papers, 0.1) %>% plot(main = "SPE (lamda = 0.1)")
+```
+
+### EqualizeDP (Double Plateaus Histogram Equalization)
+
+Double plateaus histogram equalization (DPHE) enhances contrast of image while preventing over-enhancement of background noise and protecting details of objects in images.
+
+DPHE modifies original histogram as shown below, and then apply histogram equalization.
+$$
+H_{m}(g) = \begin{cases}
+  T_{UP} & h(g) >= T_{UP} \\
+  h(g) & T_{DOWN} < h(g) < T_{UP} \\
+  T_{DOWN} & h(g) <= T_{DOWN}
+  \end{cases}
+$$
+where $g$ is the gray level, $h(g)$ is the original histogram, and $H_{m}(g)$ is the modified histogram.
+
+You will tune the two key parameters, $T_{DOWN}$ and $T_{UP}$.
+
+```{r, fig.width=7}
+layout(matrix(1:2, 1, 2))
+plot(gd, main = "Original")
+EqualizeDP(gd, 25, 110) %>% plot(main = "DPHE")
+```
+
+### EqualizeADP (Adaptive Double Plateaus Histogram Equalization)
+
+Adaptive double plateaus histogram equalization (ADPHE) computes $T_{DOWN}$ and $T_{UP}$ automatically, and then apply DPHE.
+
+```{r, fig.width=7}
+layout(matrix(1:2, 1, 2))
+plot(gd, main = "Original")
+EqualizeADP(gd) %>% plot(main = "ADPHE")
 ```
 
 <br />
 
-## Image Denoising
+## Denoising
 
 The function for image denoising is
 
@@ -147,7 +181,7 @@ Larger window size does not bring significant improvement when noise level is lo
 
 Larger window size outperforms significantly smaller window size when noise level is low.
 
-```{r, fig.width=7, fig.height=7, dev='jpeg'}
+```{r, fig.width=7, fig.height=7}
 noisy <- g + imnoise(dim = dim(g), sd = 0.1)
 layout(matrix(c(1,3,2,4), 2, 2))
 plot(g, main = "Original")
@@ -158,12 +192,15 @@ DenoiseDCT(noisy, 0.1, flag_dct16x16 = TRUE) %>% plot(., main = "Denoised (16x16
 
 <br />
 
-## Image Segmentation
+## Segmentation
 
 The functions for image segmentation are
 
 * ThresholdTriclass
 * ThresholdAdaptive
+* ThresholdFuzzy
+* ThresholdML
+* SegmentCV
 
 ### ThresholdTriclass (Iterative Triclass Thresholding)
 
@@ -202,6 +239,52 @@ hello <- ThresholdAdaptive(papers, 0.1, windowsize = 17, range = c(0,1))
 plot(hello, main = "Binarizesd")
 ```
 
+### ThresholdFuzzy (Fuzzy Thresholding)
+
+Fuzzy thresholding is an automatic thresholding based on fuzzy set theory.
+
+```{r, fig.width=7}
+layout(matrix(1:2,1,2))
+plot(g, main = "Original")
+ThresholdFuzzy(g) %>% plot(main = "Fuzzy Thresholding")
+```
+
+### ThresholdML (Multilevel Thresholding)
+
+Multilevel thresholding segments an image into several gray levels.
+
+You can specify level of thresholds or values of thresholds.
+
+The values of thresholds are computed automatically if you specify the level of thresholds.
+
+```{r, fig.width=7}
+layout(matrix(1:2,1,2))
+ThresholdML(g, k = 3) %>% plot(main = "Level of Thresholds: 3")
+ThresholdML(g, thr = c(0.2, 0.4, 0.6)) %>% plot(main = "Values of Thresholds: 0.2, 0.4, and 0.6")
+```
+
+### SegmentCV (Chan-Vese Segmentation)
+
+Chan-Vese segmentation (CVS) is an iterative region-based segmentation algorithm.
+
+CVS can extract objects whose pixel values aren't homogeneous.
+
+This is the distinction of CVS.
+
+There are many parameters of SegmentCV and most of the parameters are key paramters.
+
+It's too many to explain briefly.
+
+See [Pascal Getreuer (2012). Chan-Vese Segmentation. Image Processing On Line 2, 214-224.](https://doi.org/10.5201/ipol.2012.g-cv) for detail.
+
+```{r, fig.width=7}
+layout(matrix(1:2, 1, 2))
+plot(gd, main = "Original")
+SegmentCV(gd, lambda2 = 15) %>% plot(main = "Chan-Vese")
+```
+
+<br />
+
 ## Others
 
 The functions classified as others are
@@ -216,10 +299,10 @@ The functions classified as others are
 
 These functions are for treating color image with imagerExtra.
 
-See the vignette "Treating Color Image with imagerExtra" for detail.
+See the vignette [Treating Color Image with imagerExtra](https://cran.r-project.org/package=imagerExtra/vignettes/treat_colorimage.html) for detail.
 
 ### OCR and OCR_data
 
-These functions are shortcuts to the ocr function and ocr_data function of the R package **tesseract**.
+These functions are shortcuts to the ocr function and ocr_data function of the R package tesseract.
 
-See the vignette "Optical Character Recognition with imagerExtra" for detail.
+See the vignette [Optical Character Recognition with imagerExtra](https://cran.r-project.org/package=imagerExtra/vignettes/OCR_with_imagerExtra.html) for detail.

@@ -12,7 +12,7 @@
 
 <meta name="author" content="Shota Ochi" />
 
-<meta name="date" content="2018-07-23" />
+<meta name="date" content="2018-11-28" />
 
 <title>Treating Color Image with imagerExtra</title>
 
@@ -280,7 +280,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 <h1 class="title toc-ignore">Treating Color Image with imagerExtra</h1>
 <h4 class="author"><em>Shota Ochi</em></h4>
-<h4 class="date"><em>2018-07-23</em></h4>
+<h4 class="date"><em>2018-11-28</em></h4>
 
 
 
@@ -319,11 +319,12 @@ pre {
 <li>GetHue: stores hue of image</li>
 <li>RestoreHue: restores hue of image</li>
 </ul>
-<p>grayscale function of <strong>imager</strong> computes as below by default.</p>
+<p>grayscale function of imager computes as shown below by default.</p>
 <pre><code>Y = 0.300000R + 0.590000G + 0.110000B</code></pre>
+<p>where Y is grayscale value, R is R value, G is G value, and B is B value.</p>
 <p>This equation reflects the way of human visual perception.</p>
 <p>This grayscale conversion makes it difficult to restore hue of image.</p>
-<p>That’s why we need Grayscale, which just compute average of RGB channels.</p>
+<p>That’s why we need Grayscale function, which just compute average of RGB channels.</p>
 <p>How to use these functions is shown below.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">g &lt;-<span class="st"> </span><span class="kw">Grayscale</span>(boats)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">hueim &lt;-<span class="st"> </span><span class="kw">GetHue</span>(boats)</a>
