@@ -12,14 +12,14 @@
 
 <meta name="author" content="Shota Ochi" />
 
-<meta name="date" content="2018-11-28" />
+<meta name="date" content="2019-01-11" />
 
 <title>Optical Character Recognition with imagerExtara</title>
 
 
 
 <style type="text/css">code{white-space: pre;}</style>
-<style type="text/css">
+<style type="text/css" data-origin="pandoc">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
 a.sourceLine:empty { height: 1.2em; position: absolute; }
@@ -83,7 +83,29 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
 </style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' || rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
 
 
 
@@ -280,7 +302,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 <h1 class="title toc-ignore">Optical Character Recognition with imagerExtara</h1>
 <h4 class="author"><em>Shota Ochi</em></h4>
-<h4 class="date"><em>2018-11-28</em></h4>
+<h4 class="date"><em>2019-01-11</em></h4>
 
 
 
@@ -297,7 +319,7 @@ pre {
 }
 </style>
 <p>You need the R package tesseract, which is bindings to a powerful optical character recognition (OCR) engine, to do OCR with imagerExtra.</p>
-<p>See the <a href="https://github.com/ropensci/tesseract#installation">installation guide of tesseract</a> if you haven’t installed tesseract.</p>
+<p>See the <a href="https://github.com/ropensci/tesseract#installation">installation guide of tesseract</a> if you haven’t installed tesseract. Note that tesseract isn’t available on Solaris.</p>
 <p>ocr function of tesseract works best for images with high contrast, little noise, and horizontal text.</p>
 <p>ocr function doesn’t show a good performance for degraded images as shown below.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(imagerExtra)</a>

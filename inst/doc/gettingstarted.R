@@ -67,7 +67,7 @@ ThresholdFuzzy(g) %>% plot(main = "Fuzzy Thresholding")
 ## ---- fig.width=7--------------------------------------------------------
 layout(matrix(1:2,1,2))
 ThresholdML(g, k = 3) %>% plot(main = "Level of Thresholds: 3")
-ThresholdML(g, thr = c(0.2, 0.4, 0.6)) %>% plot(main = "Values of Thresholds: 0.2, 0.4, and 0.6")
+ThresholdML(g, thr = c(0.2, 0.4, 0.6)) %>% plot(main = "Thresholds: 0.2, 0.4, and 0.6")
 
 ## ---- fig.width=7--------------------------------------------------------
 layout(matrix(1:2, 1, 2))
