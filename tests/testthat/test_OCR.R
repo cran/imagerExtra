@@ -2,8 +2,7 @@ library(imagerExtra)
 
 test_that("OCR",
 {
-  isnot_solaris <- Sys.info()["sysname"] != "SunOS"
-  if (isnot_solaris)
+  if (requireNamespace("tesseract", quietly = TRUE))
   {
     notim <- 1
     im <- boats
